@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Author {
@@ -38,6 +39,10 @@ public class Author {
 
 	@Column(nullable = true, length = 10000000)
 	private String photo;
+	
+	@NotBlank
+	@Column(nullable = false)
+	private String nationality;
 
 	@Column(length = 3000)
 	private String biography;

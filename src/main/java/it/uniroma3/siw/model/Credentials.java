@@ -1,6 +1,7 @@
 package it.uniroma3.siw.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,8 @@ public class Credentials {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+	
+	@Column(unique = true)
 	private String username;
 	private String password;
 	private String role;
