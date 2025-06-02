@@ -19,7 +19,7 @@ public class Review {
 	private Long id;
 	
 	@Column(nullable = false)
-	@NotBlank(message = "Review title is required")
+	@NotBlank(message = "Title is required")
 	private String title;
 	
 	@Column(nullable= false)

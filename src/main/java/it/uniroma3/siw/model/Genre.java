@@ -10,6 +10,7 @@ public enum Genre {
 	THRILLER("Thriller"),
 	HORROR("Horror"),
 	MEMOIR("Memoir"),
+	COMIC("Comic/Graphic Novel"),
 	HISTORICAL("Historical");
 	
 	private final String label;
