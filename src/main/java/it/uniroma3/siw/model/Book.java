@@ -17,6 +17,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Book {
@@ -35,6 +36,7 @@ public class Book {
 	
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
+	@NotNull(message = "Genre is required!")
 	private Genre genre;
 	
 	@Column(nullable = false, length = 100000000)
