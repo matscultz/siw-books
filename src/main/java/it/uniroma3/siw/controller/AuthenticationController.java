@@ -32,7 +32,7 @@ public class AuthenticationController {
     public String roleUser() {
     	String role = credentialsService.getRoleAuthenticated();
     	return "role";
-    }
+    }  // da togliere ??
 	
 	@GetMapping(value = "/register") 
 	public String showRegisterForm (Model model) {
