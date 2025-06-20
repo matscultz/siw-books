@@ -18,6 +18,17 @@ public class ReviewService {
 	private ReviewRepository reviewRepository;
 	
 	public void save(Review review) {
+		/* Book book = review.getBook();
+		User user = review.getReviewer();
+		
+		if(book != null && !book.getReviews().contains(review))  {
+			book.getReviews().add(review);
+		}
+		
+		if(user != null && !user.getReviews().contains(review)) {
+			user.getReviews().add(review);
+		} */
+		
 		this.reviewRepository.save(review);
 	}
 
