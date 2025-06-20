@@ -1,7 +1,10 @@
 package it.uniroma3.siw.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import it.uniroma3.siw.controller.validator.BookValidator;
 import it.uniroma3.siw.model.Author;
 import it.uniroma3.siw.model.Book;
 import it.uniroma3.siw.model.Genre;
@@ -29,6 +33,9 @@ public class BookController {
 	
 	@Autowired
 	private AuthorService authorService;
+	
+	@Autowired
+	private BookValidator bookValidator;
 	
 	@GetMapping("/book")
 	public String getBooks(Model model) {
@@ -64,10 +71,41 @@ public class BookController {
 	}
 	
 	@PostMapping(value = "/admin/book")
-	public String newBook(@Valid @ModelAttribute("book") Book book, @RequestParam("authorId") Long authorId,
+	public String newBook(@Valid @ModelAttribute("book") Book book, @RequestParam("authorId") List<Long> authorIds,
 			BindingResult bindingResult, @RequestParam("image") MultipartFile multipartFile, Model model) throws IOException {
-		Author author = this.authorService.getById(authorId).get();
-		if(!this.bookService.existsByTitle(book.getTitle())) {
+		
+		
+		// Author author = this.authorService.getById(authorId).get();
+		List<Author> selectedAuthors = new ArrayList<>();
+		if(authorIds == null || authorIds.isEmpty()) {
+			bindingResult.reject("book.authors.required");
+		} else {
+			for(Long id : authorIds) {
+				Optional<Author> authorOptional = this.authorService.getById(id);
+				if(authorOptional.isEmpty()) {
+					bindingResult.reject("book.authors.invalidId");
+					break;
+				} else {
+					selectedAuthors.add(authorOptional.get());
+				}
+			}
+		}
+		book.setAuthors(selectedAuthors);
+		
+		this.bookValidator.validate(book, bindingResult);
+		
+		this.bookValidator.validate(book, bindingResult);
+		if(!bindingResult.hasErrors()) {
+			String base64Image = Base64.getEncoder().encodeToString(multipartFile.getBytes());;
+			book.setPhoto(base64Image);
+			this.bookService.save(book);
+			model.addAttribute("book", book);
+			return "book.html";
+		} else {
+			return "admin/formNewBook.html";
+		} 
+		
+		/* if(!this.bookService.existsByTitle(book.getTitle())) {
 			String base64Image = Base64.getEncoder().encodeToString(multipartFile.getBytes());;
 			book.setPhoto(base64Image);
 			book.setAuthor(author);
@@ -78,7 +116,7 @@ public class BookController {
 			model.addAttribute("messaggioErrore", "Questo libro esiste già!");
 			return "admin/formNewBook.html";
 		}
-			/*this.bookValidator.validate(book, bindingResult);
+			this.bookValidator.validate(book, bindingResult);
 		if(!bindingResult.hasErrors()) {
 			this.bookService.save(book);
 			model.addAttribute("book", book);

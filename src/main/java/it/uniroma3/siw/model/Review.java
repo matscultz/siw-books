@@ -33,7 +33,7 @@ public class Review {
 	@ManyToOne
 	private Book book;
 	
-	@OneToOne
+	@ManyToOne
 	private User reviewer;
 
 	public Long getId() {

@@ -2,6 +2,8 @@ package it.uniroma3.siw.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,11 +23,12 @@ public class User {
 	private String name;
 	@NotBlank
 	private String surname;
+	
+	@Column(nullable = false, unique = true)
 	@NotBlank
 	private String email;
 	
-	@OneToMany(mappedBy = "reviewer")
-	
+	@OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Review> reviews;
 
     public Long getId() {

@@ -22,7 +22,10 @@ public class Author {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@NotBlank
 	private String name;
+	
+	@NotBlank
 	private String surname;
 
 	@Column(nullable = false)

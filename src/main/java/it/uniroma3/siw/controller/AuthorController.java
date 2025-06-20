@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import it.uniroma3.siw.controller.validator.AuthorValidator;
 import it.uniroma3.siw.model.Author;
 import it.uniroma3.siw.service.AuthorService;
+import jakarta.validation.Valid;
 
 @Controller
 public class AuthorController {
@@ -34,7 +35,7 @@ public class AuthorController {
 	}
 	
 	@PostMapping("/admin/author")
-	public String newAuthor(@ModelAttribute("author") Author author, BindingResult bindingResult,
+	public String newAuthor(@Valid @ModelAttribute("author") Author author, BindingResult bindingResult,
 			@RequestParam("image") MultipartFile multipartFile,
 			Model model) throws IOException {
 		/* if(!this.authorService.existsByNameAndSurname(author.getName(), author.getSurname())) {
