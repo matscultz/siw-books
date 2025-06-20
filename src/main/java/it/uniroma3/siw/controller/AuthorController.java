@@ -48,8 +48,8 @@ public class AuthorController {
 			model.addAttribute("messaggioErrore", "Questo autore esiste già");
 			return "admin/formNewAuthor.html";
 		} */
-		this.authorValidator.validate(author, bindingResult);
-		if(!bindingResult.hasErrors()) {
+		// this.authorValidator.validate(author, bindingResult);
+		if(!this.authorService.existsByNameAndSurname(author.getName(), author.getSurname())) {
 			String base64Image = Base64.getEncoder().encodeToString(multipartFile.getBytes());;
 			author.setPhoto(base64Image);
 			this.authorService.save(author);

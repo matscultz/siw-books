@@ -115,6 +115,14 @@ public class Author {
 		this.dateOfDeath = dateOfDeath;
 	}
 
+	public String getNationality() {
+		return nationality;
+	}
+	
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+	
 	public String getPhoto() {
 		return photo;
 	}

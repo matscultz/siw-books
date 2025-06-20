@@ -53,7 +53,7 @@ public class Book {
 		joinColumns = @JoinColumn(name = "book_id"),
 		inverseJoinColumns = @JoinColumn(name = "author_id")
 	)*/
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Author> authors;
 
 	// Costruttori

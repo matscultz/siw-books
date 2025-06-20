@@ -71,7 +71,7 @@ public class BookController {
 	}
 	
 	@PostMapping(value = "/admin/book")
-	public String newBook(@Valid @ModelAttribute("book") Book book, @RequestParam("authorId") List<Long> authorIds,
+	public String newBook(@Valid @ModelAttribute("book") Book book, @RequestParam("authorIds") List<Long> authorIds,
 			BindingResult bindingResult, @RequestParam("image") MultipartFile multipartFile, Model model) throws IOException {
 		
 		
@@ -124,5 +124,27 @@ public class BookController {
 		} else {
 			return "admin/formNewBook.html";
 		} */
+	}
+	
+	@GetMapping(value="/admin/indexBook")
+	public String indexBook() {
+		return "admin/indexBook.html";
+	}
+	
+	@GetMapping("/formSearchBooks")
+	public String formSearchBooks() {
+		return "formSearchBooks.html";
+	}
+
+	@PostMapping("/searchBooks")
+	public String searchMovies(Model model, @RequestParam String title) {
+		model.addAttribute("movies", this.bookService.findByTitle(title));
+		return "foundBooks.html";
+	}
+	
+	@GetMapping("/admin/book/delete/{id}")
+	public String deleteBook(@PathVariable("id") Long id, Model model) {
+		this.bookService.deleteById(id);
+		return "books.html";
 	}
 }
