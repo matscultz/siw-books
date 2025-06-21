@@ -57,10 +57,9 @@
 
 	<section class="section__container arrival__container" id="catalogue">
 		<h2 class="section__header">Books</h2>
-		<div th:if="${books.isEmpty()}">
+		<div th:if="${books == null or books.isEmpty()}">
             Non ci sono libri nel sistema
         </div>
-        <div th:if="${books==null || books.isEmpty()}">Non ci sono libri nel sistema</div>
 		<!--	<ul>
 				<div class="arrival__card">
 					<li th:each="book : ${books}">
@@ -100,80 +99,16 @@
                 <a th:href="@{/author/{id}(id=${book.author.id})}" class="book-author" 
                    th:text="${book.author.surname} + ' ' + ${book.author.name}"></a>
             </p>
+            <p th:each="author : ${book.authors}">
+    			<a th:href="@{/author/{id}(id=${author.id})}"
+      			   th:text="${author.surname + ' ' + author.name}"></a>
+			</p>
+
         </div>
     </div>
 	</div>
         
-	<!--	<div class="card">
-			<a th
-				<div class="card__image">
-					<img src="https://m.media-amazon.com/images/I/51V5PZXFdVL._SY445_SX342_.jpg" alt="alternatetext">
-				</div>
-			<div class="arrival__content">
-				<div>
-					<h1>Hoodies</h1>
-					<a href="#">Explore now</a>
-				</div>
-			</div>	
-		</div>
-		<div class="arrival__card">
-			<div class="arrival__image">
-				<img src="https://m.media-amazon.com/images/I/51V5PZXFdVL._SY445_SX342_.jpg" alt="alternatetext">
-			</div>
-			<div class="arrival__content">
-				<div>
-					<h1>Hoodies</h1>
-					<a href="#">Explore now</a>
-				</div>
-			</div>	
-		</div>
-		<div class="arrival__card">
-			<div class="arrival__image">
-				<img src="https://m.media-amazon.com/images/I/51V5PZXFdVL._SY445_SX342_.jpg" alt="alternatetext">
-			</div>
-			<div class="arrival__content">
-				<div>
-					<h1>Hoodies</h1>
-					<a href="#">Explore now</a>
-				</div>
-			</div>	
-		</div>
-		<div class="arrival__card">
-			<div class="arrival__image">
-				<img src="https://m.media-amazon.com/images/I/51V5PZXFdVL._SY445_SX342_.jpg" alt="alternatetext">
-			</div>
-			<div class="arrival__content">
-				<div>
-					<h1>Hoodies</h1>
-					<a href="#">Explore now</a>
-				</div>
-			</div>	
-		</div>
-	</section> -->
 	
-	<!-- <h1>Libri</h1>
-	<div th:if="${books==null || books.isEmpty()}">Non ci sono libri nel sistema</div>
-	<ul>
-		<li th:each="book : ${books}">
-			<a th:href="@{'/book' + '/' + ${book.id}}"
-				th:text="${book.title} + ' (' + ${book.year} + ')'">Up! (2000)</a>
-			<div th:unless="${book.author}">
-			<a th:href="@{'/admin/addAuthor/' + ${book.id}}">Aggiungi autore</a>
-		</div>
-		</li>
-	</ul>
-	<div sec:authorize="isAuthenticated()">
-  This content is only shown to authenticated users. PER TUTTI
-	</div>	
-	 
-	<sec:authorize access="hasRole('ADMIN_ROLE')">
-    <p>Must have ROLE_ADMIN</p>
-    </sec:authorize>
-    
-    <p sec:authorize="hasRole('R')">Hello Admin, you have elevated permissions!</p>
-	<div sec:authorize="hasRole('ADMIN')">
-        <button type="button">Admin Only Button</button>
-    </div> -->
 </body>
 
 </html>

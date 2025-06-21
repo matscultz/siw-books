@@ -176,6 +176,7 @@ public class BookController {
 	@GetMapping("/admin/book/delete/{id}")
 	public String deleteBook(@PathVariable("id") Long id, Model model) {
 		this.bookService.deleteById(id);
-		return "books.html";
+		model.addAttribute("books", this.bookService.findAllBooks());
+		return "redirect:/book";
 	}
 }
