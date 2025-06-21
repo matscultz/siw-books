@@ -58,6 +58,8 @@ public class BookController {
 	@GetMapping(value="/admin/formUpdateBook/{id}")
 	public String formUpdateBook(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("book", this.bookService.getById(id).get());
+		model.addAttribute("authors", authorService.getAllInOrder());
+		model.addAttribute("genres", Genre.values());
 		return "admin/formUpdateBook.html";
 	}
 	

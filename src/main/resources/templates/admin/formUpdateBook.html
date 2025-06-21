@@ -3,7 +3,7 @@
 
 <head>
 	<title>
-		New Book
+		Update Book
 	</title>
 	<link rel="stylesheet" href="/css/stile3.css" />
 </head>
@@ -46,27 +46,65 @@
 		</nav>
 	</header>
 
-	<div class="container2">
-		<div class="menu">
-			<h1>Update book</h1>
-			<div th:if="${book}">
-				<div>
-					<span th:text="${book.title}">Up!</span>
-					<span th:text="'(' + ${book.year} + ')'">2000</span>
-				</div>
-				<div th:if="${book.author}">
-					<span>Author: </span><span th:text="${book.author.name} + ' ' + ${book.author.surname}">Steven
-						Spielberg</span>
-					<a th:href="@{'/admin/addAuthor/' + ${book.id}}">Change author</a></span>
-				</div>
-				<div th:unless="${book.author}">
-					<a th:href="@{'/admin/addAuthor/' + ${book.id}}">Add author</a>
-				</div>
-				<a th:href="@{'/admin/delete' + '/' + ${book.id}}">Delete</a>
-		
-				<div th:unless="${book}">Film non esistente</div>
-		</div>
+	<form class="formform" th:action="@{'/admin/updateBook/' + ${book.id}}" method="POST" th:object="${book}" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}" /> 
+
+    <div th:if="${#fields.hasGlobalErrors()}">
+        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
+    </div>
+    
+    <div>
+        <span>Title:</span> 
+        <span><input class="inputform" type="text" th:field="*{title}" placeholder=""/></span>
+        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+    </div>
+
+    <div>
+        <span>Release year:</span> 
+        <span><input class="inputform" type="number" min="1700" max="2025" th:field="*{year}" /></span>
+        <span th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
+    </div>
+
+    <div>
+	     <span for="genre">Genre:</span>
+	     <select class="select-form" id="genre" th:field="*{genre}" required>
+    <option value="" disabled th:text="'Select a genre:'" 
+            th:if="${book.genre == null}" selected></option>
+    <option th:each="genre : ${genres}" 
+            th:value="${genre}" 
+            th:text="${genre}" />
+</select>
+
 	</div>
+
+    <div>
+        <span>Plot:</span> 
+        <span><textarea class="inputform" type="text" th:field="*{plot}"></textarea></span>
+        <span th:if="${#fields.hasErrors('plot')}" th:errors="*{plot}"></span>
+    </div>
+    
+    <div>
+        <span for="authors">Author:</span>
+        <select class="select-form" id="authors" name="authorIds" multiple required>
+            <option value="" disabled>Select an author:</option>
+            <option th:each="author : ${authors}" 
+                    th:value="${author.id}" 
+                    th:text="${author.surname + ' ' + author.name}"
+                    th:selected="${book.authors != null and book.authors.contains(author)}"> 
+            </option>
+        </select>
+        <span th:if="${#fields.hasErrors('authors')}" th:errors="*{authors}"></span>
+    </div>
+
+    <div>
+        <span>Photo:</span> 
+        <input type="file" name="image" accept="image/png, image/jpeg, image/jpg" th:attr="required=${book.id == null ? true : false}"/>
+    </div>
+    
+    <div>
+        <span><button type="submit">Submit</button></span>
+    </div>
+</form>
 </body>
 
 </html>
