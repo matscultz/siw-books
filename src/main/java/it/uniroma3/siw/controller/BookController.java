@@ -63,6 +63,35 @@ public class BookController {
 		return "admin/formUpdateBook.html";
 	}
 	
+	@PostMapping("/admin/updateBook/{id}")
+	public String updateBook(@PathVariable("id") Long id, @Valid @ModelAttribute("book") Book book, BindingResult bindingResult,
+	                         @RequestParam("authorIds") List<Long> authorIds, @RequestParam("image") MultipartFile multipartFile,
+	                         Model model) throws IOException {
+	    if (bindingResult.hasErrors()) {
+	        model.addAttribute("authors", authorService.getAllInOrder());
+	        model.addAttribute("genres", Genre.values());
+	        return "admin/formUpdateBook.html";
+	    }
+	    
+	    Book existingBook = bookService.getById(id).get();
+
+	    existingBook.setTitle(book.getTitle());
+	    existingBook.setYear(book.getYear());
+	    existingBook.setPlot(book.getPlot());
+	    existingBook.setGenre(book.getGenre());
+	    existingBook.setAuthors(authorService.findAllByIds(authorIds));
+
+	    if (!multipartFile.isEmpty()) {
+	        String base64Image = Base64.getEncoder().encodeToString(multipartFile.getBytes());
+	        existingBook.setPhoto(base64Image);
+	    }
+
+	    bookService.save(existingBook);
+
+	    model.addAttribute("book", existingBook);
+	    return "book.html";
+	}
+
 	@GetMapping(value = "/admin/formNewBook")
 	public String addNewBook(Model model) {
 		//model.addAttribute("authors", this.authorService.getAll());
