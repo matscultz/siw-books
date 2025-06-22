@@ -69,12 +69,13 @@
             <span><i class="ri-user-line"></i></span> Author
           </h5>
           <span>:</span>
-          <p>
- 			 <span th:each="author : ${book.authors}">
-    			<a th:href="@{/author/{id}(id=${author.id})}" class="book-author" th:text="${author.surname} + ' ' + ${author.name}"></a>
-   				<span th:if="${!${#lists.isLast(author, book.authors)}}">, </span>
- 			 </span>
+		  <p>
+ 			 <span th:each="author, iterStat : ${book.authors}">
+    			 <a th:href="@{/author/{id}(id=${author.id})}" class="book-author" th:text="${author.surname + ' ' + author.name}"></a>
+   				 <span th:if="${!iterStat.last}">, </span>
+  			</span>
 		  </p>
+
         </div>
         
       </div>
@@ -107,7 +108,6 @@
 		
      
            <div th:unless="${#authorization.expression('isAuthenticated()')}"> </div>
-        <span><img width="5%" th:src=${book.urlOfPicture} /></span>
     </div>
     <div th:unless="${book}">Non esiste</div> 
   </body>
