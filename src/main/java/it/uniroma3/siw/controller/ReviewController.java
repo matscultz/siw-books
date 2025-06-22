@@ -80,8 +80,7 @@ public class ReviewController {
 	@GetMapping("/admin/review/delete/{id}")
 	public String deleteReview(@PathVariable("id") Long id, Model model) {
 		this.reviewService.deleteById(id);
-		model.addAttribute("reviews", this.reviewService.findAllReviews());
-		return "redirect:/admin/reviews";
+		return "admin/indexAdmin.html";
 	}
 	 
 }

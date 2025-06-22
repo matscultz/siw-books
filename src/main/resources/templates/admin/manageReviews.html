@@ -51,9 +51,10 @@
 	        <ul>
 	            <li th:each="review : ${reviews}">
 	                <span>
-	                    <strong th:text="${review.user.username}">User</strong> reviewed 
+	                    <strong th:text="${review.reviewer.name}">User</strong> reviewed 
 	                    <em th:text="${review.book.title}">Book</em>:
-	                    <q th:text="${review.content}">Review content</q> 
+	                    <q th:text="${review.comment}">Review content</q> 
+	                    <q th:text="${review.id}">id</q> 
 	                    <span th:text="'Rating: ' + ${review.rating}">Rating: 5</span>
 	                </span>
 	                <a th:href="@{'/admin/review/delete/' + ${review.id}}">Delete</a>

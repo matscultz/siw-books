@@ -21,4 +21,6 @@ public interface ReviewRepository extends CrudRepository<Review, Long>{
 	
 	public List<Review> findByRatingGreaterThanEqual(Integer rating);
 	
+	public void deleteById(Long id);
+	
 }
