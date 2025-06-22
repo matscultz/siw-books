@@ -11,6 +11,8 @@ import it.uniroma3.siw.model.User;
 
 public interface ReviewRepository extends CrudRepository<Review, Long>{
 	
+	public List<Review> findAll();
+	
 	public List<Review> findByBook(Book book);
 	
 	public List<Review> findByReviewer(User reviewer);

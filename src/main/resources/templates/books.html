@@ -96,9 +96,11 @@
             <img  th:src="@{'data:image;base64,' + ${book.photo}}" width="180" height="90" alt="Book Cover">
             <a th:href="@{/book/{id}(id=${book.id})}" class="book-title" th:text="${book.title}"></a>
              <p>
-                <a th:href="@{/author/{id}(id=${book.author.id})}" class="book-author" 
-                   th:text="${book.author.surname} + ' ' + ${book.author.name}"></a>
-            </p>
+ 				 <span th:each="author : ${book.authors}">
+    				<a th:href="@{/author/{id}(id=${author.id})}" class="book-author" th:text="${author.surname} + ' ' + ${author.name}"></a>
+   					 <span th:if="${!${#lists.isLast(author, book.authors)}}">, </span>
+  				 </span>
+			 </p>
             <p th:each="author : ${book.authors}">
     			<a th:href="@{/author/{id}(id=${author.id})}"
       			   th:text="${author.surname + ' ' + author.name}"></a>

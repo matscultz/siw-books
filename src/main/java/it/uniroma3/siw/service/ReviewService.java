@@ -52,6 +52,8 @@ public class ReviewService {
 		this.reviewRepository.deleteById(id);
 	}
 	
-	
+	public List<Review> findAllReviews() {
+		return this.reviewRepository.findAll();
+	}
 	
 }

@@ -71,5 +71,17 @@ public class ReviewController {
 		return "redirect:/books/" + bookId;
 	}
 	
-	@GetMapping("/admin/")
+	@GetMapping("/admin/manageReviews")
+	public String manageReviews(Model model) {
+		model.addAttribute("reviews", this.reviewService.findAllReviews());
+		return "admin/manageReviews.html";
+	}
+	
+	@GetMapping("/admin/review/delete/{id}")
+	public String deleteReview(@PathVariable("id") Long id, Model model) {
+		this.reviewService.deleteById(id);
+		model.addAttribute("reviews", this.reviewService.findAllReviews());
+		return "redirect:/admin/reviews";
+	}
+	 
 }

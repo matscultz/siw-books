@@ -1,5 +1,6 @@
 package it.uniroma3.siw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -46,7 +47,7 @@ public class Book {
 	private String plot;
 	
 	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Review> reviews;
+	private List<Review> reviews = new ArrayList<>();
 	
 	/* @JoinTable(
 		name = "book_author",

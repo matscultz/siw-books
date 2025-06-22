@@ -70,9 +70,11 @@
           </h5>
           <span>:</span>
           <p>
-                <a th:href="@{/author/{id}(id=${book.author.id})}" class="book-author" 
-                   th:text="${book.author.surname} + ' ' + ${book.author.name}"></a>
-            </p>
+ 			 <span th:each="author : ${book.authors}">
+    			<a th:href="@{/author/{id}(id=${author.id})}" class="book-author" th:text="${author.surname} + ' ' + ${author.name}"></a>
+   				<span th:if="${!${#lists.isLast(author, book.authors)}}">, </span>
+ 			 </span>
+		  </p>
         </div>
         
       </div>
@@ -80,7 +82,7 @@
 	
     
     	<div>
-        <div th:if="${!book.reviews.isEmpty()}">
+        <div th:if="${book.reviews != null and !book.reviews.isEmpty()}">
             <h2>Recensioni:</h2>
             <ul>
                 <li th:each="review: ${book.reviews}">
@@ -101,7 +103,7 @@
     	   <div>
             <a th:href="@{'/user/formNewReview/' + ${book.id}}">Aggiungi Recensione</a>
         </div>
-        
+
 		
      
            <div th:unless="${#authorization.expression('isAuthenticated()')}"> </div>
