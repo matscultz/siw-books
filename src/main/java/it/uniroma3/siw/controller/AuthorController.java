@@ -77,4 +77,32 @@ public class AuthorController {
 		model.addAttribute("authors", this.authorService.getAll());
 		return "authors.html";
 	}
+	
+	@GetMapping("/admin/formUpdateAuthor/{id}")
+	public String formUpdateAuthor(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("author", this.authorService.getById(id).get());
+		return "admin/formUpdateAuthor.html";
+	}
+	
+	@PostMapping("/admin/updateAuthor/{id}")
+	public String updateAuthor(@PathVariable("id") Long id, @Valid @ModelAttribute("author") Author author,
+			BindingResult bindingResult, @RequestParam("image") MultipartFile multipartFile, Model model) throws IOException {
+		if(bindingResult.hasErrors()) {
+			return "admin/formUpdateAuthor.html";
+		}
+		
+		Author existingAuthor = authorService.getById(id).get();
+		if (!multipartFile.isEmpty()) {
+	        String base64Image = Base64.getEncoder().encodeToString(multipartFile.getBytes());
+	        existingAuthor.setPhoto(base64Image);
+	    }
+		this.authorService.save(existingAuthor);
+		return "redirect:/author/" + id;	
+	}
+	
+	@GetMapping(value="/admin/manageAuthors")
+	public String manageAuthors(Model model) {
+		model.addAttribute("authors", this.authorService.getAll());
+		return "admin/manageAuthors.html";
+	}
 }
