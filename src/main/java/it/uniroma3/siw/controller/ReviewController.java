@@ -19,6 +19,7 @@ import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.service.BookService;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.ReviewService;
+import it.uniroma3.siw.service.UserService;
 
 @Controller
 public class ReviewController {
@@ -33,10 +34,10 @@ public class ReviewController {
 	private ReviewValidator reviewValidator;
 	
 	@Autowired
-	private GlobalController globalController;
+	private CredentialsService credentialsService;
 	
 	@Autowired
-	private CredentialsService credentialsService;
+	private UserService userService;
 	
 	@GetMapping("/user/formNewReview/{id}")
 	public String formReview(@PathVariable("id") Long id, Model model) {
@@ -50,16 +51,25 @@ public class ReviewController {
 			@PathVariable("bookId") Long bookId, Model model) {
 		// this.reviewValidator.validate(review, bindingResult);
 		Book book = this.bookService.getById(bookId).get();
-			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	        Credentials credentials = this.credentialsService.getCredentials(userDetails.getUsername());
-	        User user = credentials.getUser();
-	        review.setReviewer(user);
-	        review.setBook(book);
-			// review.setReviewer(this.credentialsService.getCredentials(bookId))
-			this.reviewService.save(review);
-			book.getReviews().add(review);
-			user.getReviews().add(review);
-			return "index.html";
+		
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Credentials credentials = this.credentialsService.getCredentials(userDetails.getUsername());
+        User user = credentials.getUser();
+        review.setReviewer(user);
+        review.setBook(book);
+        
+        this.reviewValidator.validate(review, bindingResult);
+        
+        if(bindingResult.hasErrors()) {
+        	model.addAttribute("book", book);
+        	return "user/formNewReview.html";
+        }
+		
+		this.reviewService.save(review);
+		book.getReviews().add(review);
+		user.getReviews().add(review);
+		return "redirect:/books/" + bookId;
 	}
 	
+	@GetMapping("/admin/")
 }
