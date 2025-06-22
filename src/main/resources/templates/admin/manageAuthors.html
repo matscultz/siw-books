@@ -48,6 +48,10 @@
 	<div class="menu">
 		<h1>Authors</h1>
 		
+		<div th:if="${deleteMessage}" class="alert alert-success">
+            <p th:text="${deleteMessage}"></p>
+        </div>
+		
 		<div th:if="${authors.isEmpty()}">There are no authors</div>
 		
 		<ul>

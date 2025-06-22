@@ -105,4 +105,11 @@ public class AuthorController {
 		model.addAttribute("authors", this.authorService.getAll());
 		return "admin/manageAuthors.html";
 	}
+	
+	@GetMapping("/admin/author/delete/{id}")
+	public String deleteAuthor(@PathVariable("id") Long id, Model model) {
+		this.authorService.deleteById(id);
+		model.addAttribute("authors", this.authorService.getAll());
+		return "redirect:/author";
+	}
 }

@@ -7,13 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Author;
+import it.uniroma3.siw.model.Book;
 import it.uniroma3.siw.repository.AuthorRepository;
+import it.uniroma3.siw.repository.BookRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class AuthorService {
 	
 	@Autowired
 	private AuthorRepository authorRepository;
+	
+	@Autowired
+	private BookRepository bookRepository;
 
 	public List<Author> getAll() {
 		return (List<Author>) this.authorRepository.findAll();
@@ -39,11 +46,23 @@ public class AuthorService {
 		return this.authorRepository.findBySurname(surname);
 	}
 
-	public void deleteById(Long id) {
-		this.authorRepository.deleteById(id);
-	}
-
 	public List<Author> findAllByIds(List<Long> authorIds) {
 		return (List<Author>) this.authorRepository.findAllById(authorIds);
 	}
+
+    @Transactional
+    public void deleteById(Long authorId) {
+        
+        Author authorToDelete = authorRepository.findById(authorId)
+                                                .orElseThrow(() -> new EntityNotFoundException("Autore non trovato con ID: " + authorId));
+
+        for(Book book : authorToDelete.getBooks()) {
+        	book.getAuthors().remove(authorToDelete);
+        	this.bookRepository.save(book);
+        }
+        
+        authorToDelete.getBooks().clear();
+
+        this.authorRepository.delete(authorToDelete);
+    }
 }
