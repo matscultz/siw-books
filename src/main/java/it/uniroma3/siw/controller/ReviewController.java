@@ -68,7 +68,7 @@ public class ReviewController {
 		this.reviewService.save(review);
 		book.getReviews().add(review);
 		user.getReviews().add(review);
-		return "redirect:/books/" + bookId;
+		return "redirect:/book/" + bookId;
 	}
 	
 	@GetMapping("/admin/manageReviews")
