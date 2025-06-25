@@ -3,9 +3,10 @@
 
 <head>
 	<title>
-		New Book
+		BookFair - New Book
 	</title>
 	<link rel="stylesheet" href="/css/stile3.css" />
+	<link rel="icon" type="image/png" href="/images/favicon.png">
 </head>
 
 <body class="body1">
@@ -52,62 +53,7 @@
 			</ul>
 		</nav>
 	</header>
-	
-	<!-- <div class="container__right">	
-		<div class="content">
-			<p class="header__login">Aggiungi un libro</p>
-			<form th:action="@{/admin/book}" method="POST" th:object="${book}">
-		  		<div th:if="${#fields.hasGlobalErrors()}">
-		  			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
-		  		</div>
-				
-				<div class="input__group">
-					
-					<input type="text" th:field="${book.title}" placeholder=""/>
-				    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
-				    </span>
-				    <label>Titolo:</label> 
-				</div>
 		
-				<div>
-					<label>Data di rilascio:</label> <span><input type="number" min="1700" max="2025" th:field="${book.year}" /></span>
-				    <span th:if="${#fields.hasErrors('year')}" th:errors="*{year}">
-				    </span>
-				</div>
-		
-				<div>
-		            <label for="genre">Genre:</label>
-		            <select id="genre" name="genre" required>
-		                <option value="" disabled selected>Select a genre:</option>
-		                <option th:each="genre : ${genres}" th:value="${genre}" th:text="${genre}"></option>
-		            </select>
-		        </div>
-				<div>
-					<label>Trama:</label> 
-					<span><input type="text" th:field="${book.plot}" /></span>
-				    <span th:if="${#fields.hasErrors('plot')}" th:errors="*{plot}">
-				    </span>
-				</div>
-				
-				<div>
-		            <label for="author">Author:</label>
-		            <select id="author" name="authorId" required>
-		                <option value="" disabled selected>Select an author:</option>
-		                <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.surname + ' ' + author.name}"></option>
-		            </select>
-		        </div>
-		        
-				<div>
-					<label>URL immagine:</label> <span><input type="text" th:field="${book.urlOfPicture}" /></span>
-				</div>
-				
-				<div>
-					<span><button type="submit">Conferma</button></span>
-				</div>
-			</form>
-		</div>
-	</div>  -->
-	
 	<div class="container2">	
 		<div class="myform">
 			<div class="inserisci-text">
@@ -168,8 +114,8 @@
 					<span><button type="submit">Submit</button></span>
 				</div>
 			</form>
+			</div>
 		</div>
-	</div>
 	</body>
 
 </html>

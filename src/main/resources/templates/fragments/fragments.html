@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Fragments</title>
+    <link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+
+    <header th:fragment="main-header" class="header">
+        <nav class="navbar">
+            <a href="/" class="navbar-logo">
+                <img class="logo" src="../../../images/logo.png" alt="Logo" />
+            </a>
+
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <label for="menu-toggle" class="hamburger">&#9776;</label>
+
+            <div class="navbar-links">
+				<a href="/habitats" class="nav-link">Habitat</a>
+                <a href="/species" class="nav-link">Specie</a>
+                <a href="/animal" class="nav-link">Animali</a>
+                <a href="/about" class="nav-link">Chi siamo</a>
+
+                <div class="auth-links" th:if="${userDetails}">
+                    <span class="user-name" th:text="${userDetails.username}"></span>
+                    <a href="/logout" class="nav-link">Logout</a>
+                </div>
+                <div class="auth-links" th:unless="${userDetails}">
+                    <a href="/login" class="nav-link">Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+      <header th:fragment="admin-header" class="header">
+        <nav class="navbar">
+            <a href="/" class="navbar-logo">
+                <img class="logo" src="../../../images/logo.png" alt="Logo" />
+            </a>
+
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <label for="menu-toggle" class="hamburger">&#9776;</label>
+
+            <div class="navbar-links">
+				<a href="/habitats" class="nav-link">Habitat</a>
+                <a href="/species" class="nav-link">Specie</a>
+                <a href="/animal" class="nav-link">Animali</a>
+
+                <div class="auth-links" th:if="${userDetails}">
+                    <span class="user-name" th:text="${userDetails.username}"></span>
+                    <a href="/logout" class="nav-link">Logout</a>
+                </div>
+                <div class="auth-links" th:unless="${userDetails}">
+                    <a href="/login" class="nav-link">Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <footer th:fragment="main-footer">
+        <p>&copy; 2025 - Siw Zoo</p>
+    </footer>
+    
+    	<footer th:fragment="book-footer" class="footer">
+      <div class="section__container footer__container">
+        <div class="footer__col">
+          <div class="logo footer__logo">
+            <a href="#home">BookFair</a>
+          </div>
+          <p>
+            Discover new books and discuss them with our community!
+          </p>
+          <div class="footer__socials">
+            <a href="#"><i class="ri-facebook-fill"></i></a>
+            <a href="#"><i class="ri-twitter-fill"></i></a>
+            <a href="#"><i class="ri-instagram-fill"></i></a>
+            <a href="#"><i class="ri-pinterest-fill"></i></a>
+            <a href="#"><i class="ri-linkedin-fill"></i></a>
+          </div>
+        </div>
+        <div class="footer__col">
+          <h4>Quick Links</h4>
+          <ul class="footer__links">
+            <li><a href="#">Explore Books</a></li>
+            <li><a href="#">Discover New Authors</a></li>
+            <li><a href="#">Join our Community</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <ul class="footer__links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Our Team</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Contact Us</h4>
+          <ul class="footer__links">
+            <li><a href="#">Customer Support</a></li>
+            <li><a href="#">Business Inquiries</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bar">
+        Copyright 2025 All rights reserved.
+      </div>
+    </footer>
+    
+
+
+</body>
+
+</html>

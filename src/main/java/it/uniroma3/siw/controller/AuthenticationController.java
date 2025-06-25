@@ -1,5 +1,7 @@
 package it.uniroma3.siw.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import it.uniroma3.siw.model.Book;
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.User;
+import it.uniroma3.siw.service.BookService;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.UserService;
 import jakarta.validation.Valid;
@@ -27,6 +31,9 @@ public class AuthenticationController {
 
     @Autowired
 	private UserService userService;
+    
+    @Autowired
+    private BookService bookService;
     
     @RequestMapping("role")
     public String roleUser() {
@@ -48,6 +55,10 @@ public class AuthenticationController {
 
 	@GetMapping(value = "/") 
 	public String index(Model model) {
+		List<Book> books = this.bookService.findAllBooks();
+		List<Book> firstFour = books.stream().limit(4).toList();
+		model.addAttribute("books", firstFour);
+		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken) {
 	        return "index.html";

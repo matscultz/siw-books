@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
+	  <title th:text="'BookFair - ' + ${author.surname}">BookFair - Huang</title>	
     <title>Authors</title>
 	<link rel="stylesheet" href="/css/stile.css" />
+	<link rel="icon" type="image/png" href="/images/favicon.png">
 </head>
 
 <body>
@@ -69,7 +71,14 @@
                     <span>in </span>
                     <span th:text="${author.placeOfDeath}">Place of Death</span></p>
             </div>
-          
+        <div class="intro__grid">
+          <h5>
+            <span><i class="ri-user-line"></i></span> Nationality: 
+          </h5>
+          <span>:</span>
+          <p><span th:text="${author.nationality}">Italian</span>
+          	</p>
+	        </div>
     
         
       </div>
@@ -96,27 +105,7 @@
         
        
     </section>
-	  <!--  <h1>Dettagli Autori</h1>
-	    <div th:if="${author}">
-	        <span th:text="${author.name} + ' ' + ${author.surname}">Dino Risi</span>
-	        <span th:text="'(' + ${author.dateOfBirth} + ')'">20/20/2000</span>
-	        <span th:text="'(' + ${author.placeOfBirth} + ')'">Roma</span>
-	        <span th:if="${author.dateOfDeath}">
-	                    <p th:text="${'Death date: ' + author.dateOfDeath}">20/20/1999</p>
-	        </span>
-	        <span th:if="${author.placeOfDeath}">
-	                    <p th:text="${'Morto a: ' + author.placeOfDeath}">Roma</p>
-	        </span>
-	        <span th:text="'(' + ${author.biography} + ')'">Roma</span>
-	        <span><img width="5%" th:src=${author.urlOfPicture} /></span>
-	        <ul>
-			<li th:each="book : ${author.books}">
-				<span th:text="${book.title} + ' (' + ${book.year} + ')'">Up! (2000)></span>
-			</li>
-		</ul>
-	    </div>
-	    <div th:unless="${author}">Non esiste</div>
-	</div> -->
 
+	<div th:replace="fragments/fragments.html :: book-footer"></div>
   </body>
 </html>
