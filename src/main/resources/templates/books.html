@@ -43,39 +43,9 @@
 		</div>
 	</header>
 
-	<section class="section__container arrival__container" id="catalogue">
-		<h2 class="section__header">Books</h2>
-		<div th:if="${books == null or books.isEmpty()}">
-            Non ci sono libri nel sistema
-        </div>
-        
-        </section>
-        
-        <section class="portfolio" id="portfolio">
-      <div class="section__container portfolio__container">
-        
-        <h2 class="section__header">Books by this author</h2>
-        <div class="portfolio__nav">
-          
-        </div>
-       
-        <div class="portfolio__grid">
-          <div th:each="book : ${books}" class="portfolio__card">
-			   <img th:src="@{'data:image;base64,' + ${book.photo}}" alt="Book Cover">
-             <a th:href="@{/book/{id}(id=${book.id})}" class="book-title" th:text="${book.title}"></a>
-          
-				<span th:text="${book.year}">2000></span>
-			
-          </div>
-          
-        </div>
-        
-       
-    </section>
-    
-        <div class="container3">
+    <!--     <div class="container3">
 	    <div class="book-list">
-        <!-- Iterate over the list of books passed from the controller -->
+       
         <div th:each="book : ${books}" class="book-item">
             <img  th:src="@{'data:image;base64,' + ${book.photo}}" width="180" height="90" alt="Book Cover">
             <a th:href="@{/book/{id}(id=${book.id})}" class="book-title" th:text="${book.title}"></a>
@@ -88,7 +58,26 @@
 
         </div>
     </div>
-	</div>
+	</div> -->
+	
+		<section class="menu" id="menu">
+	    <div class="section__container menu__container">
+	        <h2 class="section__header">Books</h2>
+	        <div class="menu__grid">
+	            <div class="menu__card" th:each="book : ${books}">
+					<a th:href="@{'/book/' + ${book.id}}" class="menu__card__link">
+	                <img th:src="@{'data:image;base64,' + ${book.photo}}"/>
+	                <div class="menu__card__content">
+	                    <h4 th:text="${book.title}">Book Title</h4>
+							<ul>
+  								<li th:each="author : ${book.authors}" th:text="${author.surname + ' ' + author.name}">Author Name</li>
+							</ul>
+	                </div>
+					</a>
+	            </div>
+	        </div>
+	    </div>
+	</section>
         
 	
 </body>
