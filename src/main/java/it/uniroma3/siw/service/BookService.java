@@ -43,7 +43,6 @@ public class BookService {
 	    try {
 	        genre = Genre.valueOf(genreString.toUpperCase());
 	    } catch (IllegalArgumentException e) {
-	        // gestisci l'errore, ad esempio ritorna lista vuota o lancia eccezione
 	        return Collections.emptyList();
 	    }
 	    return this.bookRepository.findByGenre(genre);

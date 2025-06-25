@@ -11,7 +11,7 @@
 		<nav>
 			<div class="nav__header">
 				<div class="nav__logo">
-					<a href="#">
+					<a href="/">
 						<img src="/images/logo1.png" alt="logo" />
 					</a>
 				</div>
@@ -99,10 +99,10 @@
             </ul>
         </div> 
         <div th:unless="${!book.reviews.isEmpty()}"> 
-            <h2>Non ci recensioni per questo film</h2>
+            <h2>There are no reviews for this book</h2>
         </div>
  		<div th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.authorities,'DEFAULT')}">          
-    			<a th:href="@{/somelink}">DEFAULT LINK</a>
+
     			<a th:href="@{'/user/formNewReview/' + ${book.id}}">Aggiungi Recensione</a>
         </div>
 

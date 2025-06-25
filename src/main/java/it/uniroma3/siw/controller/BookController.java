@@ -161,17 +161,7 @@ public class BookController {
 	public String indexBook() {
 		return "admin/indexBook.html";
 	}
-	
-	@GetMapping("/formSearchBooks")
-	public String formSearchBooks() {
-		return "formSearchBooks.html";
-	}
 
-	@PostMapping("/searchBooks")
-	public String searchMovies(Model model, @RequestParam String title) {
-		model.addAttribute("movies", this.bookService.findByTitle(title));
-		return "foundBooks.html";
-	}
 	
 	@GetMapping("/admin/book/delete/{id}")
 	public String deleteBook(@PathVariable("id") Long id, Model model) {
